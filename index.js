@@ -1,0 +1,14 @@
+import{a as g,i as n}from"./assets/vendor-4yCzdkXl.js";(function(){const o=document.createElement("link").relList;if(o&&o.supports&&o.supports("modulepreload"))return;for(const e of document.querySelectorAll('link[rel="modulepreload"]'))t(e);new MutationObserver(e=>{for(const r of e)if(r.type==="childList")for(const a of r.addedNodes)a.tagName==="LINK"&&a.rel==="modulepreload"&&t(a)}).observe(document,{childList:!0,subtree:!0});function i(e){const r={};return e.integrity&&(r.integrity=e.integrity),e.referrerPolicy&&(r.referrerPolicy=e.referrerPolicy),e.crossOrigin==="use-credentials"?r.credentials="include":e.crossOrigin==="anonymous"?r.credentials="omit":r.credentials="same-origin",r}function t(e){if(e.ep)return;e.ep=!0;const r=i(e);fetch(e.href,r)}})();function p(s){return s.map(({webformatURL:o,largeImageURL:i,tags:t,likes:e,views:r,comments:a,downloads:d})=>`
+                <li class="gallery-item">
+                    <a href="${i}"><img src="${o}" alt="${t}" width="360"/>
+                        <ul class="image-descr-list">
+                            <li class="image-descr-item">Tags: ${t}</li>
+                            <li class="image-descr-item">Likes: ${e}</li>
+                            <li class="image-descr-item">Views: ${r}</li>
+                            <li class="image-descr-item">Comments: ${a}</li>
+                            <li class="image-descr-item">Downloads: ${d}</li>
+                        </ul>
+                    </a>
+                </li>
+                `).join("")}async function h(s,o,i){const{data:t}=await g.get(`${s}?key=${o}&${i}`);return console.log("await data",t),t}const m="47534106-2225be5d16534437522f359a0",c=new URLSearchParams({key:m,q:"",image_type:"photo",orientation:"horizontal",safesearch:!0,page:1,per_page:15}),f="https://pixabay.com/api/",u=document.querySelector(".gallery"),l=document.querySelector(".js-search-form");l.addEventListener("submit",function(s){s.preventDefault(),u.innerHTML="";const i=s.target.querySelector(".search-input").value.trim();if(console.log("input-trim:",i),!i){n.show({messageColor:"white",backgroundColor:"red",position:"topRight",close:!0,title:"",message:"Please, enter text"}),l.reset();return}c.set("q",i),h(f,m,c).then(t=>{t.hits.lenght===0&&n.show({messageColor:"white",backgroundColor:"red",position:"topRight",close:!0,title:"",message:"Sorry, there are no images matching your search query. Please try again!"}),u.insertAdjacentHTML("beforeend",p(t.hits)),new SimpleLightbox(".gallery-item a",{captionDelay:250,captions:!0,captionsData:"alt"}).refresh(),loader.style.visibility="hidden"}).catch(t=>n.show({messageColor:"white",backgroundColor:"red",position:"topRight",close:!0,title:`${t}`,message:"Sorry, there are no images matching your search query. Please try again!"})).finally(()=>l.reset())});
+//# sourceMappingURL=index.js.map
