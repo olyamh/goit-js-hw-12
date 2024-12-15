@@ -25,7 +25,7 @@
 }
 
 .gallery{
-    max-width: 360px;
+   
     display:flex;
     flex-wrap:wrap;
     gap: 24px;
@@ -33,10 +33,20 @@
 
 }
 
+.gallery-item{
+  max-width: 360px;
+  max-height: 200px;
+  display: contents;
+}
+
+.image-descr-item{
+  max-height: 48px;
+
+}
 
 
 /* loader */
-/* .loader {
+.loader {
     width: 48px;
     height: 48px;
     border:10px solid #FFF;
@@ -63,7 +73,7 @@
       50%  {clip-path:polygon(50% 50%,0 0,100% 0,100% 100%,100% 100%,100% 100%)}
       75%  {clip-path:polygon(50% 50%,0 0,100% 0,100% 100%,0 100%,0 100%)}
       100% {clip-path:polygon(50% 50%,0 0,100% 0,100% 100%,0 100%,0 0)}
-  } */
+  }
 /* loader's end */
 
 .load-more-hidden {
