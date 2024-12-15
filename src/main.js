@@ -38,7 +38,7 @@ form.addEventListener('submit', function (event) {
   event.preventDefault();
   gallery.innerHTML = '';
   loader.style.visibility = 'visible';
-  
+  loadMore.classList.replace("load-more", "load-more-hidden");
   const input = event.target.querySelector('.search-input');
   const clientInput = input.value.trim();
   console.log('input-trim:', clientInput);
