@@ -51,10 +51,12 @@ form.addEventListener('submit', function (event) {
       title: ``,
       message: 'Please, enter text',
     });
+    loader.style.visibility = 'hidden';
     form.reset();
     return;
   }
   params.set('q', clientInput);
+  params.set('page', 1);
 
   needPhotos(BASE_URL, API_KEY, params)
     .then(data => {
@@ -90,7 +92,8 @@ form.addEventListener('submit', function (event) {
         title: `${error}`,
         message:
           'Sorry, there are no images matching your search query. Please try again!',
-      })
+      }),
+      loader.style.visibility = 'hidden'
     )
     .finally(() => form.reset());
 
@@ -98,13 +101,15 @@ form.addEventListener('submit', function (event) {
 });
 
 loadMore.addEventListener('click', function () {
+  
   loadMore.disable = true;
   pageValue ++;
-  params.set('page', pageValue);   
+  params.set('page', pageValue);  
+  loader.style.visibility = 'visible'; 
   needPhotos(BASE_URL, API_KEY, params)
- .then (data => {
+   .then (data => {
   const endOfPhotots = data.total /pageValue;
-  
+  loader.style.visibility = 'hidden';
   gallery.insertAdjacentHTML("beforeend" ,createMarkup(data.hits));
   lightbox.refresh();
   const imageCard = document.querySelector(".gallery-item");
@@ -128,6 +133,8 @@ loadMore.addEventListener('click', function () {
       message:
         'Sorry, there are no more images! Please try other query!',
     })
+    loader.style.visibility = 'hidden';
+    pageValue=1
   }
   
  })
@@ -140,7 +147,8 @@ loadMore.addEventListener('click', function () {
     title: `${error}`,
     message:
       'Sorry, there are no images matching your search query. Please try again!',
-  })
+  }),
+  loader.style.visibility = 'hidden'
 )
 .finally(() => loadMore.disable = false);
 })
