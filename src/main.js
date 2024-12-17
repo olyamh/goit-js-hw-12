@@ -13,7 +13,7 @@ const lightbox = new SimpleLightbox('.gallery-item a', {
   captionsData: 'alt',
 });
 
-let pageValue=1;
+let pageValue="";
 const API_KEY = '47534106-2225be5d16534437522f359a0';
 const params = new URLSearchParams({
   key: API_KEY,
@@ -57,6 +57,7 @@ form.addEventListener('submit', function (event) {
   }
   params.set('q', clientInput);
   params.set('page', 1);
+  pageValue=1;
 
   needPhotos(BASE_URL, API_KEY, params)
     .then(data => {
@@ -101,15 +102,15 @@ form.addEventListener('submit', function (event) {
 });
 
 loadMore.addEventListener('click', function () {
-  
+  loader.style.visibility = 'visible'; 
   loadMore.disable = true;
   pageValue ++;
   params.set('page', pageValue);  
-  loader.style.visibility = 'visible'; 
+  
   needPhotos(BASE_URL, API_KEY, params)
    .then (data => {
-  const endOfPhotots = data.total /pageValue;
-  loader.style.visibility = 'hidden';
+  const endOfPhotots = Math.ceil(data.totalHits /pageValue);
+  
   gallery.insertAdjacentHTML("beforeend" ,createMarkup(data.hits));
   lightbox.refresh();
   const imageCard = document.querySelector(".gallery-item");
@@ -131,10 +132,12 @@ loadMore.addEventListener('click', function () {
       close: true,
       title: ``,
       message:
-        'Sorry, there are no more images! Please try other query!',
-    })
+        "We're sorry, but you've reached the end of search results.",
+    }),
+    gallery.insertAdjacentHTML('beforeend', `<p>We're sorry, but you've reached the end of search results.</p>
+      `)
     loader.style.visibility = 'hidden';
-    pageValue=1
+   
   }
   
  })
